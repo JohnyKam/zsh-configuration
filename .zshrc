@@ -99,7 +99,13 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias alrel=". ~/.zshrc && echo 'zsh aliases from ~/.zshrc reloaded.'"
+
 alias ll="ls -lah"
+
+# conan aliases
+alias clar="conan search '*' -r goandlearn-main-conan"
+alias ccch="conan remove '*' -f"
 
 # Set starting dir
 cd ~/
