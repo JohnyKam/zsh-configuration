@@ -104,8 +104,10 @@ alias alrel=". ~/.zshrc && echo 'zsh aliases from ~/.zshrc reloaded.'"
 alias ll="ls -lah"
 
 # conan aliases
-alias clar="conan search '*' -r goandlearn-main-conan"
-alias ccch="conan remove '*' -f"
+alias conllr="conan search '*' -r goandlearn-main-conan"
+alias conll="conan search '*'"
+alias conclear="conan remove '*' -f"
+
 
 # Set starting dir
 cd ~/
