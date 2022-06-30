@@ -115,6 +115,20 @@ alias conllr="conan search '*' -r goandlearn-main-conan"
 alias conll="conan search '*'"
 alias conclear="conan remove '*' -f"
 
+# git alias
+git_jira_feature_commit(){
+	JIRA_FEATURE=$(git rev-parse --abbrev-ref HEAD)
+	JIRA_FEATURE_CHECK=${JIRA_FEATURE:0:7}
+	JIRA_FEATURE=${JIRA_FEATURE:8:7}
+	
+	if [ "${JIRA_FEATURE_CHECK}" = "feature" ]; then
+		echo "Feature $JIRA_FEATURE"
+		gcmsg "\"${JIRA_FEATURE} $@\""
+	else
+		echo "Git repository is not in feature/ branch! (${JIRA_FEATURE_CHECK}"
+	fi
+}
+alias gjfcmsg="git_jira_feature_commit"
 
 # Set starting dir
 # cd ~/
