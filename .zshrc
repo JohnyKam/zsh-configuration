@@ -121,14 +121,17 @@ unalias gcmsg
 git_jira_feature_commit(){
         GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
         JIRA_FEATURE_CHECK=${GIT_BRANCH:0:7}
-        JIRA_FEATURE=${GIT_BRANCH:8:7}
+        JIRA_FEATURE=${GIT_BRANCH:8:4}
+        JIRA_FEATURE_NO=${GIT_BRANCH//[!0-9]/}
 
         if [ "${JIRA_FEATURE_CHECK}" = "feature" ]; then
                 # echo "Feature $JIRA_FEATURE"
-                git commit -m "${JIRA_FEATURE} $@"
+                git commit -m "$${JIRA_FEATURE}${JIRA_FEATURE_NO} $@"
+                # echo "${JIRA_FEATURE}${JIRA_FEATURE_NO} $@"
         else
                 # echo "Git repository is not in feature/ branch! (current branch: ${GIT_BRANCH})"
-                git commit -m "$@"
+                # git commit -m "$@"
+                echo "$@"
         fi
 }
 alias gcmsg="git_jira_feature_commit"
