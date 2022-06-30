@@ -125,10 +125,10 @@ git_jira_feature_commit(){
 
         if [ "${JIRA_FEATURE_CHECK}" = "feature" ]; then
                 # echo "Feature $JIRA_FEATURE"
-                gcmsg "${JIRA_FEATURE} $@"
+                git commit -m "${JIRA_FEATURE} $@"
         else
                 # echo "Git repository is not in feature/ branch! (current branch: ${GIT_BRANCH})"
-                gcmsg "$@"
+                git commit -m "$@"
         fi
 }
 alias gcmsg="git_jira_feature_commit"
