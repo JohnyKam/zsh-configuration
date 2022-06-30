@@ -116,19 +116,22 @@ alias conll="conan search '*'"
 alias conclear="conan remove '*' -f"
 
 # git alias
+#unset alias from git plugin
+unset gcmsg
 git_jira_feature_commit(){
         GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
         JIRA_FEATURE_CHECK=${GIT_BRANCH:0:7}
         JIRA_FEATURE=${GIT_BRANCH:8:7}
 
         if [ "${JIRA_FEATURE_CHECK}" = "feature" ]; then
-                echo "Feature $JIRA_FEATURE"
+                # echo "Feature $JIRA_FEATURE"
                 gcmsg "${JIRA_FEATURE} $@"
         else
-                echo "Git repository is not in feature/ branch! (current branch: ${GIT_BRANCH})"
+                # echo "Git repository is not in feature/ branch! (current branch: ${GIT_BRANCH})"
+                gcmsg "$@"
         fi
 }
-alias gjfcmsg="git_jira_feature_commit"
+alias gcmsg="git_jira_feature_commit"
 
 # Set starting dir
 # cd ~/
