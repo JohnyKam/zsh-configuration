@@ -111,24 +111,41 @@ alias alrel=". ~/.zshrc && echo 'zsh aliases from ~/.zshrc reloaded.'"
 alias ll="ls -lah"
 
 # conan aliases
-alias conllr="conan search '*' -r goandlearn-main-conan"
-alias conll="conan search '*'"
-alias conclear="conan remove '*' -f"
+conan_search_remote(){
+        conan search "$@" -r goandlearn-main-conan
+}
 
-# git alias
+conan_search(){
+        conan search "$@"
+}
+
+conan_clear_local_cache(){
+        conan remove "$@" -f
+}
+alias consrr="conan_search_remote"
+alias consr="conan_search"
+alias conclear="conan_clear_local_cache"
+
+# git aliases
 git_jira_feature_commit(){
         GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
         JIRA_FEATURE_CHECK=${GIT_BRANCH:0:7}
-        JIRA_FEATURE=${GIT_BRANCH:8:7}
+        JIRA_FEATURE=${GIT_BRANCH:8:4}
+        JIRA_FEATURE_NO=${GIT_BRANCH//[!0-9]/}
 
         if [ "${JIRA_FEATURE_CHECK}" = "feature" ]; then
-                echo "Feature $JIRA_FEATURE"
-                gcmsg "${JIRA_FEATURE} $@"
+                # echo "Feature $JIRA_FEATURE"
+                git commit -m "${JIRA_FEATURE}${JIRA_FEATURE_NO} $@"
+                # echo "${JIRA_FEATURE}${JIRA_FEATURE_NO} $@"
         else
-                echo "Git repository is not in feature/ branch! (current branch: ${GIT_BRANCH})"
+                # echo "Git repository is not in feature/ branch! (current branch: ${GIT_BRANCH})"
+                # git commit -m "$@"
+                echo "$@"
         fi
 }
-alias gjfcmsg="git_jira_feature_commit"
+#unset alias from git plugin
+unalias gcmsg
+alias gcmsg="git_jira_feature_commit"
 
 # Set starting dir
 # cd ~/
