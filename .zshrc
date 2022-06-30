@@ -111,13 +111,22 @@ alias alrel=". ~/.zshrc && echo 'zsh aliases from ~/.zshrc reloaded.'"
 alias ll="ls -lah"
 
 # conan aliases
-alias conllr="conan search '*' -r goandlearn-main-conan"
-alias conll="conan search '*'"
-alias conclear="conan remove '*' -f"
+conan_search_remote(){
+        conan search "$@" -r goandlearn-main-conan
+}
 
-# git alias
-#unset alias from git plugin
-unalias gcmsg
+conan_search(){
+        conan search "$@"
+}
+
+conan_clear_local_cache(){
+        conan remove "$@" -f
+}
+alias consrr="conan_search_remote"
+alias consr="conan_search"
+alias conclear="conan_clear_local_cache"
+
+# git aliases
 git_jira_feature_commit(){
         GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
         JIRA_FEATURE_CHECK=${GIT_BRANCH:0:7}
@@ -134,6 +143,8 @@ git_jira_feature_commit(){
                 echo "$@"
         fi
 }
+#unset alias from git plugin
+unalias gcmsg
 alias gcmsg="git_jira_feature_commit"
 
 # Set starting dir
