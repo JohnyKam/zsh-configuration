@@ -117,7 +117,7 @@ alias conclear="conan remove '*' -f"
 
 # git alias
 #unset alias from git plugin
-unset gcmsg
+unalias gcmsg
 git_jira_feature_commit(){
         GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
         JIRA_FEATURE_CHECK=${GIT_BRANCH:0:7}
