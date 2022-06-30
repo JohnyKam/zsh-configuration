@@ -79,7 +79,14 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# and install locales (in docker container add also:
+# echo "LC_ALL=en_US.UTF-8" | tee -a /etc/environment
+# echo "en_US.UTF-8 UTF-8" | tee -a /etc/locale.gen
+# echo "LANG=en_US.UTF-8" | tee -a /etc/locale.conf
+# locale-gen en_US.UTF-8
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -110,6 +117,6 @@ alias conclear="conan remove '*' -f"
 
 
 # Set starting dir
-cd ~/
+# cd ~/
 
 
