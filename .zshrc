@@ -126,7 +126,7 @@ git_jira_feature_commit(){
 
         if [ "${JIRA_FEATURE_CHECK}" = "feature" ]; then
                 # echo "Feature $JIRA_FEATURE"
-                git commit -m "$${JIRA_FEATURE}${JIRA_FEATURE_NO} $@"
+                git commit -m "${JIRA_FEATURE}${JIRA_FEATURE_NO} $@"
                 # echo "${JIRA_FEATURE}${JIRA_FEATURE_NO} $@"
         else
                 # echo "Git repository is not in feature/ branch! (current branch: ${GIT_BRANCH})"
