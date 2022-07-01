@@ -132,15 +132,22 @@ git_jira_feature_commit(){
         JIRA_FEATURE_CHECK=${GIT_BRANCH:0:7}
         JIRA_FEATURE=${GIT_BRANCH:8:4}
         JIRA_FEATURE_NO=${GIT_BRANCH//[!0-9]/}
+	JIRA_VPM_NO=${@:0:6}
+	JIRA_VPM_NO=${JIRA_VPM_NO//[!0-9]/}
 
         if [ "${JIRA_FEATURE_CHECK}" = "feature" ]; then
-                # echo "Feature $JIRA_FEATURE"
-                git commit -m "${JIRA_FEATURE}${JIRA_FEATURE_NO} $@"
-                # echo "${JIRA_FEATURE}${JIRA_FEATURE_NO} $@"
+		if [ "${JIRA_VPM_NO}" = "" ]; then
+			echo "Please, give Jira task number!"
+		else
+			# echo "Feature ${JIRA_FEATURE}"
+			# echo "Jira task number: ${JIRA_VPM_NO}"
+			# echo "${JIRA_FEATURE}$@"
+                	git commit -m "${JIRA_FEATURE}$@"
+                fi
         else
                 # echo "Git repository is not in feature/ branch! (current branch: ${GIT_BRANCH})"
-                # git commit -m "$@"
-                echo "$@"
+		# echo "$@"
+                git commit -m "$@"
         fi
 }
 #unset alias from git plugin
