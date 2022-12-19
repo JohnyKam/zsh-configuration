@@ -9,6 +9,13 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="gnzh"
+# ZSH_THEME="powerlevel9k/powerlevel9k"
+
+# POWERLEVEL9K_DISABLE_RPROMPT=true
+# POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+# POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="▶ "
+# POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+# POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -127,34 +134,78 @@ alias consr="conan_search"
 alias conclear="conan_clear_local_cache"
 
 # git aliases
-git_jira_feature_commit(){
+git_jira_commit(){
         GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-        JIRA_FEATURE_CHECK=${GIT_BRANCH:0:7}
-        JIRA_FEATURE=${GIT_BRANCH:8:4}
-        JIRA_FEATURE_NO=${GIT_BRANCH//[!0-9]/}
-	JIRA_VPM_NO=${@:0:6}
-	JIRA_VPM_NO=${JIRA_VPM_NO//[!0-9]/}
+	JIRA_TYPE=${GIT_BRANCH%/*}
 
-        if [ "${JIRA_FEATURE_CHECK}" = "feature" ]; then
-		if [ "${JIRA_VPM_NO}" = "" ]; then
-			echo "Please, give Jira task number!"
-		else
-			# echo "Feature ${JIRA_FEATURE}"
-			# echo "Jira task number: ${JIRA_VPM_NO}"
-			# echo "${JIRA_FEATURE}$@"
-                	git commit -m "${JIRA_FEATURE}$@"
-                fi
-        else
-                # echo "Git repository is not in feature/ branch! (current branch: ${GIT_BRANCH})"
-		# echo "$@"
-                git commit -m "$@"
-        fi
+	BRANCH_NAME=${GIT_BRANCH##*/}
+
+	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev`
+	REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
+	JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
+
+	REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
+	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
+	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
+	JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
+
+	case $JIRA_TYPE in
+    	#cases
+	    "feature" | "bugfix" | "hotfix" | "release")
+		JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
+	        # git commit with JIRA_BRANCH
+	        git commit -m "${JIRA_BRANCH} $@"
+    	    ;;
+
+	#default
+	    *)
+        	JIRA_TYPE=
+	        BRANCH_NAME=
+	        git commit -m "$@"
+	    ;;
+	esac              
 }
+
+git_jira_commit_test(){
+	GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+	
+	JIRA_TYPE=${GIT_BRANCH%/*}
+
+	BRANCH_NAME=${GIT_BRANCH##*/}
+
+	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev`
+	REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
+	JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
+
+	REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
+	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
+	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
+	JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
+
+	case $JIRA_TYPE in
+		"feature" | "bugfix" | "hotfix" | "release")
+			JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
+			echo "git commit -m \"${JIRA_BRANCH} $@\""
+		;;
+		
+		*)
+			echo "git commit -m \"$@\""
+		;;
+	esac
+}
+
 #unset alias from git plugin
 unalias gcmsg
-alias gcmsg="git_jira_feature_commit"
+alias gcmsg="git_jira_commit"
+alias gcmsgt="git_jira_commit_test"
 
 # Set starting dir
 # cd ~/
+
+# Add ssh keys for ssh 
+#ssh-add ~/.ssh/malina 1> /dev/null 2>&1
+#ssh-add ~/.ssh/shifter 1> /dev/null 2>&1
+#ssh-add ~/.ssh/viofor_vpb2504 1> /dev/null 2>&1
+#ssh-add ~/.ssh/viofor_vpb2503 1> /dev/null 2>&1
 
 
