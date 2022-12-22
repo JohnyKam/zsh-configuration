@@ -77,7 +77,7 @@ ZSH_THEME="gnzh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git history jfrog pip)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -117,6 +117,9 @@ alias alrel=". ~/.zshrc && echo 'zsh aliases from ~/.zshrc reloaded.'"
 
 alias ll="ls -lah"
 alias lg="ls -lah | grep"
+
+# python command
+alias py='python3'
 
 # conan aliases
 conan_search_remote(){
