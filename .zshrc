@@ -116,6 +116,7 @@ fi
 alias alrel=". ~/.zshrc && echo 'zsh aliases from ~/.zshrc reloaded.'"
 
 alias ll="ls -lah"
+alias lg="ls -lah | grep"
 
 # conan aliases
 conan_search_remote(){
