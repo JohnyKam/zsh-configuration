@@ -212,4 +212,7 @@ alias gcmsgt="git_jira_commit_test"
 #ssh-add ~/.ssh/viofor_vpb2504 1> /dev/null 2>&1
 #ssh-add ~/.ssh/viofor_vpb2503 1> /dev/null 2>&1
 
-
+# bash history settings
+export PROMPT_COMMAND='history -a'
+export HISTSIZE=999999999999
+export HISTFILESIZE=$HISTSIZE
