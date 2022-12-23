@@ -198,10 +198,29 @@ git_jira_commit_test(){
 	esac
 }
 
+git_tag_delete_local_and_remote(){
+	git push --delete origin "$@" && git tag -d "$@"
+}
+
+git_tag_add_local_and_remote(){
+	git tag "$@" && git push origin "$@"
+}
+
+git_tag_unittest_add_local_and_remote(){
+	git tag "UnitTests-$@" && git push origin "UnitTests-$@"
+}
+
+git_tag_package_add_local_and_remote(){
+	git tag "Package-$@" && git push origin "Package-$@"
+}
+
 #unset alias from git plugin
 unalias gcmsg
 alias gcmsg="git_jira_commit"
 alias gcmsgt="git_jira_commit_test"
+alias gtrm="git_tag_delete_local_and_remote"
+alias gtaut="git_tag_unittest_add_local_and_remote"
+alias gtapkg="git_tag_package_add_local_and_remote"
 
 # Set starting dir
 # cd ~/
