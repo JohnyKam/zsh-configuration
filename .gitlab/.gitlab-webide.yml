@@ -1,6 +1,7 @@
 terminal:
   image: alpine
-  before_script: apt-get update
+  before_script:
+    - apk update
   script: sleep 60
   variables:
     GITLAB_TERMINAL_ENV: "yes"
