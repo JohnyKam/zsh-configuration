@@ -1,5 +1,6 @@
 terminal:
   image: bookworm-slim
+  before_script: apt-get update
   script: sleep 60
   variables:
     GITLAB_TERMINAL_ENV: "yes"
