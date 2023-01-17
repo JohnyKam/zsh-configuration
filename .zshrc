@@ -235,3 +235,11 @@ alias gtapkg="git_tag_package_add_local_and_remote"
 export PROMPT_COMMAND='history -a'
 export HISTSIZE=999999999999
 export HISTFILESIZE=$HISTSIZE
+
+# required cowsay and fortune apps :-)
+cowsay_msg(){
+	fortune | cowsay -f dragon 2>/dev/null
+}
+
+cowsay_msg
+
