@@ -2,4 +2,4 @@ terminal:
   image: bookworm-slim
   script: sleep 60
   variables:
-    GITLAB_TERMINAL="yes"
+    GITLAB_TERMINAL_ENV: "yes"
