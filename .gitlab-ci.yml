@@ -40,7 +40,7 @@ test1:
     - pwd
     - ls -lah
     - cd $REPO_DIR && ./install.sh
-    - . ~/.zshrc
+    - /bin/zsh
 
 # test2:
 #   stage: test
