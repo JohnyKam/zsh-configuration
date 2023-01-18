@@ -1,5 +1,6 @@
 terminal:
-  image: bookworm-slim
+  before_script:
+    - apk update
   script: sleep 60
   variables:
-    GITLAB_TERMINAL="yes"
+    GITLAB_TERMINAL_ENV: "yes"
