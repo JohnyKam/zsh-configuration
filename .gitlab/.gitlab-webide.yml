@@ -1,4 +1,5 @@
 terminal:
+  image: debian:stable-slim
   before_script:
     - apk update
   script: sleep 60
