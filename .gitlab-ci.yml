@@ -16,6 +16,8 @@ before_script:
   - echo "Before script section"
   - echo "For example you might run an update here or install a build dependency"
   - echo "Or perhaps you might print out some debugging details"
+  - apk update
+  - apk install zsh cowsay fortune
 
 after_script:
   - echo "After script section"
@@ -25,6 +27,8 @@ build1:
   stage: build
   script:
     - echo "Do your build here"
+    - pwd
+    - ls -lah
 
 test1:
   stage: test
