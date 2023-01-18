@@ -35,8 +35,6 @@ test1:
     - ls -lah
     - REPO_DIR=$(pwd) && echo "$REPO_DIR"
     - whoami
-    - su tester
-    - whoami
     # - cd $REPO_DIR && ./install.sh
     - cd ~/
     - pwd
