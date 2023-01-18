@@ -91,6 +91,7 @@ source $ZSH/oh-my-zsh.sh
 # echo "en_US.UTF-8 UTF-8" | tee -a /etc/locale.gen
 # echo "LANG=en_US.UTF-8" | tee -a /etc/locale.conf
 # locale-gen en_US.UTF-8
+# dpkg-reconfigure locales
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
