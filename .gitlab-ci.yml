@@ -41,8 +41,7 @@ test1:
     - cd ~/
     - pwd
     - ls -lah
-    - zsh
-    - . ~/.zshrc
+    - /bin/zsh /root/.zshrc
 
 # test2:
 #   stage: test
