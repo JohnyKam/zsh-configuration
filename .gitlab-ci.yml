@@ -32,16 +32,23 @@ after_script:
 
 test1:
   stage: test
+  variables:
+    GITLAB_TERMINAL_ENV: "yes"
+    TEST_USER_ENV: "tester"
+    TEST_USER_PASS_ENV: "test1234_A"
   script:
     - echo "Do a test here"
     - echo "For example run a test suite"
     - pwd
     - ls -lah
-    - ./install.sh
-    - cd ~/
-    - pwd
-    - ls -lah
-    - /bin/zsh /root/.zshrc
+    - adduser $TEST_USER_ENV
+    - echo "$TEST_USER_ENV:$TEST_USER_PASS_ENV" | chpasswd
+    - echo "$TEST_USER_PASS_ENV" | su $TEST_USER_ENV
+    # - ./install.sh
+    # - cd ~/
+    # - pwd
+    # - ls -lah
+    # - /bin/zsh /root/.zshrc
 
 # test2:
 #   stage: test
