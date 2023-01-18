@@ -18,7 +18,7 @@ before_script:
   # - echo "For example you might run an update here or install a build dependency"
   # - echo "Or perhaps you might print out some debugging details"
   - apt-get update
-  - apt-get install -y curl zsh cowsay fortune
+  - apt-get install -y curl zsh cowsay fortune git
   - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 after_script:
