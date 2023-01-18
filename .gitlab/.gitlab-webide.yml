@@ -1,7 +1,7 @@
 terminal:
-  image: debian:stable-slim
+  image: johnykaminski/debian-slim-with-user
   before_script:
-    - apk update
+    - apt-get update
   script: sleep 60
   variables:
     GITLAB_TERMINAL_ENV: "yes"
