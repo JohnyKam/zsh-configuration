@@ -40,8 +40,8 @@ test1:
     - pwd
     - ls -lah
     - cd $REPO_DIR && ./install.sh
-    - /bin/zsh
-    - . ~/.zshrc
+    - echo "$SHELL"
+    - /bin/zsh ~/.zshrc
 
 # test2:
 #   stage: test
