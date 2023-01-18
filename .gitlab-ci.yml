@@ -41,7 +41,7 @@ test1:
     - ls -lah
     - cd $REPO_DIR && ./install.sh
     - echo "$SHELL"
-    - find / -name "fortune"
+    - PATH=$PATH":/usr/games"
     - /bin/zsh ~/.zshrc
 
 # test2:
