@@ -41,9 +41,8 @@ test1:
     - echo "For example run a test suite"
     - pwd
     - ls -lah
-    - adduser $TEST_USER_ENV
-    - echo "$TEST_USER_ENV:$TEST_USER_PASS_ENV" | chpasswd
-    - echo "$TEST_USER_PASS_ENV" | su $TEST_USER_ENV
+    - adduser --disabled-password $TEST_USER_ENV
+    - su $TEST_USER_ENV
     # - ./install.sh
     # - cd ~/
     # - pwd
