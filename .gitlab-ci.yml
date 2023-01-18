@@ -42,8 +42,10 @@ test1:
     - REPO_DIR=$(pwd) && echo "$REPO_DIR"
     - adduser --disabled-password $TEST_USER_ENV
     - ls -lah /home/tester
-    - su $TEST_USER_ENV
-    - echo $USERNAME
+    - cat /home/tester/.bashrc
+    - cat /home/tester/.profile
+    - su $TEST_USER_ENV -s /bin/zsh -p
+    - echo "$GITLAB_TERMINAL_ENV"
     - pwd
     - ls -lah
     # - cd $REPO_DIR && ./install.sh
