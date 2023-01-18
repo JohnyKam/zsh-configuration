@@ -28,15 +28,18 @@ build1:
   stage: build
   script:
     - echo "Do your build here"
-    - pwd
-    - ls -lah
-    - ./install.sh
 
 test1:
   stage: test
   script:
     - echo "Do a test here"
     - echo "For example run a test suite"
+    - pwd
+    - ls -lah
+    - ./install.sh
+    - cd ~/
+    - cd pwd
+    - ls -lah
     - . ~/.zshrc
 
 # test2:
