@@ -45,6 +45,7 @@ test1:
     - cat /home/tester/.bashrc
     - cat /home/tester/.profile
     - su $TEST_USER_ENV -s /bin/zsh -p
+    - whoami
     - echo "$GITLAB_TERMINAL_ENV"
     - pwd
     - ls -lah
