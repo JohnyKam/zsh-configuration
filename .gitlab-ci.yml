@@ -11,15 +11,13 @@
 
 # you can delete this line if you're not using Docker
 #image: busybox:latest
-image: debian:stable-slim
+image: johnykaminski/debian-slim-with-user 
 
 before_script:
   - echo "Before script section"
   # - echo "For example you might run an update here or install a build dependency"
   # - echo "Or perhaps you might print out some debugging details"
-  - apt-get update
-  - apt-get install -y curl zsh cowsay fortune git procps
-  - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  # - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 after_script:
   - echo "After script section"
@@ -32,10 +30,6 @@ after_script:
 
 test1:
   stage: test
-  variables:
-    GITLAB_TERMINAL_ENV: "yes"
-    TEST_USER_ENV: "tester"
-    TEST_USER_PASS_ENV: "test1234_A"
   script:
     - echo "Do a test here"
     - ls -lah
