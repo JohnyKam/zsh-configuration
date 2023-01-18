@@ -11,16 +11,16 @@
 
 # you can delete this line if you're not using Docker
 #image: busybox:latest
-image: johnykaminski/debian-slim-with-user 
+image: johnykaminski/debian-slim-with-user
 
-before_script:
-  - echo "Before script section"
+# before_script:
+#   - echo "Before script section"
   # - echo "For example you might run an update here or install a build dependency"
   # - echo "Or perhaps you might print out some debugging details"
   # - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-after_script:
-  - echo "After script section"
+# after_script:
+#   - echo "After script section"
   # - echo "For example you might do some cleanup here"
 
 # build1:
