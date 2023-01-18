@@ -38,7 +38,7 @@ test1:
     - ls -lah
     - ./install.sh
     - cd ~/
-    - cd pwd
+    - pwd
     - ls -lah
     - . ~/.zshrc
 
