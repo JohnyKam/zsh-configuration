@@ -35,11 +35,12 @@ test1:
     - ls -lah
     - REPO_DIR=$(pwd) && echo "$REPO_DIR"
     - whoami
-    # - cd $REPO_DIR && ./install.sh
+    - cd $REPO_DIR && ./install.sh
     - cd ~/
     - pwd
     - ls -lah
-    # - /bin/zsh /root/.zshrc
+    - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    - /bin/zsh /root/.zshrc
 
 # test2:
 #   stage: test
