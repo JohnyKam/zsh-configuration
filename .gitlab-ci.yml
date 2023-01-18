@@ -41,6 +41,7 @@ test1:
     - ls -lah
     - cd $REPO_DIR && ./install.sh
     - /bin/zsh
+    - . ~/.zshrc
 
 # test2:
 #   stage: test
