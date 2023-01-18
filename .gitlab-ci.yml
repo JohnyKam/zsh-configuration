@@ -41,11 +41,12 @@ test1:
     - ls -lah
     - REPO_DIR=$(pwd) && echo "$REPO_DIR"
     - adduser --disabled-password $TEST_USER_ENV
-    - ls -lah /home
+    - ls -lah /home/tester
     - su $TEST_USER_ENV
+    - echo $USERNAME
     - pwd
     - ls -lah
-    - cd $REPO_DIR && ./install.sh
+    # - cd $REPO_DIR && ./install.sh
     - cd ~/
     - pwd
     - ls -lah
