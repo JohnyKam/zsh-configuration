@@ -38,15 +38,17 @@ test1:
     TEST_USER_PASS_ENV: "test1234_A"
   script:
     - echo "Do a test here"
-    - echo "For example run a test suite"
+    - ls -lah
+    - REPO_DIR=$(pwd) && echo "$REPO_DIR"
+    - adduser --disabled-password $TEST_USER_ENV
+    - ls -lah /home
+    - su $TEST_USER_ENV
     - pwd
     - ls -lah
-    - adduser --disabled-password $TEST_USER_ENV
-    - su $TEST_USER_ENV
-    # - ./install.sh
-    # - cd ~/
-    # - pwd
-    # - ls -lah
+    - cd $REPO_DIR && ./install.sh
+    - cd ~/
+    - pwd
+    - ls -lah
     # - /bin/zsh /root/.zshrc
 
 # test2:
