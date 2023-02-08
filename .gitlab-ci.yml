@@ -35,7 +35,8 @@ test1:
     - whoami
     - pwd
     - ls -lah
-    # - REPO_DIR=$(pwd) && echo "$REPO_DIR"
+    - REPO_DIR=$(pwd)
+    # - echo "$REPO_DIR"
     # - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     - cd ~/
     - pwd
