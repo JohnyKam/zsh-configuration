@@ -36,6 +36,7 @@ else
 fi
 
 cp .zshrc ~/ && echo ".zshrc from git repo copied to home dir"
+cp .p10k.zsh ~/ && ".p10k.zsh from git repo copied to home dir"
 
 echo "Set ZSH_THEME=\"powerlevel10k/powerlevel10k\" in ~/.zshrc."
 echo "end run 'source ~/.zshrc'"
