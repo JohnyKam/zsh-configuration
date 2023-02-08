@@ -11,6 +11,12 @@ function install_powerlevel10k(){
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 }
 
+function install_oh_my_zsh(){
+    (
+        echo exit
+    ) | sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+}
+
 if [ -d ~/.oh-my-zsh ];
 then
     echo "oh-my-zsh installed"
@@ -27,7 +33,7 @@ then
 else
     echo "oh-my-zsh is missingi!"
     echo "installing oh-my-zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    install_oh_my_zsh
     echo "oh-my-zsh installed."
     echo "installing Powerlevel10k..."
     install_powerlevel10k
