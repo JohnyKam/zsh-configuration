@@ -4,6 +4,19 @@ Just some .zshrc config backup shared between all machines.
 
 Required: [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
 
+# Install zsh
+
+Debian:
+<pre><code>sudo apt-get install zsh</code></pre>
+
+alpine:
+<pre><code>apk add zsh</code></pre>
+
+# Install [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
+
+Run this to install oh-my-zsh:
+<pre><code>sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"</code></pre>
+
 # Install [PowerLevel10K](https://github.com/romkatv/powerlevel10k) Theme for Oh My Zsh
 
 Run this to install PowerLevel10K:
