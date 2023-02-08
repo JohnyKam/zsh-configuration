@@ -32,10 +32,11 @@ test1:
   stage: test
   script:
     - echo "Do a test here"
-    - ls -lah
-    - REPO_DIR=$(pwd) && echo "$REPO_DIR"
     - whoami
-    - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    - pwd
+    - ls -lah
+    # - REPO_DIR=$(pwd) && echo "$REPO_DIR"
+    # - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     - cd ~/
     - pwd
     - ls -lah
