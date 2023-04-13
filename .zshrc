@@ -237,10 +237,18 @@ export PROMPT_COMMAND='history -a'
 export HISTSIZE=999999999999
 export HISTFILESIZE=$HISTSIZE
 
+#Docker vs code extension reset
+vs_code_ext_reset() {
+	VS_CODE_CPPTOOLS_PATH="/root/.vscode-server/extensions/ms-vscode.cpptools-1.14.5-linux-x64/bin/"
+	chmod u+x $VS_CODE_CPPTOOLS_PATH"cpptools"
+	chmod u+x $VS_CODE_CPPTOOLS_PATH"cpptools-srv"
+	chmod u+x $VS_CODE_CPPTOOLS_PATH"cpptools-wordexp"
+}
+[[ -d "$VS_CODE_CPPTOOLS_PATH" ]] && vs_code_ext_reset
+
 # required cowsay and fortune apps :-)
 cowsay_msg(){
 	fortune | cowsay -f dragon 2>/dev/null
 }
 
-cowsay_msg
-
+which cowsay 1> /dev/null 2>&1 && cowsay_msg
