@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.local/bin:/usr/games:$PATH
+export PATH="$HOME/.local/bin:/usr/games:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -248,7 +248,7 @@ vs_code_ext_reset() {
 
 # required cowsay and fortune apps :-)
 cowsay_msg(){
-	fortune | cowsay -f dragon 2>/dev/null
+	which cowsay 1>/dev/null 2>&1 && which fortune 1>/dev/null 2>&1 && fortune | cowsay -f dragon 2>/dev/null
 }
 
-which cowsay 1> /dev/null 2>&1 && cowsay_msg
+cowsay_msg
