@@ -119,6 +119,21 @@ alias alrel=". ~/.zshrc && echo 'zsh aliases from ~/.zshrc reloaded.'"
 alias ll="ls -lah"
 alias lg="ls -lah | grep"
 
+system-upgrade(){
+	SYSTEM_INFO=$(uname -o)
+
+	case $SYSTEM_INFO in
+		"GNU/Linux")
+			# debian/ubuntu/respbian update
+			sudo apt-get update && sudo apt-get upgrade -y
+		;;
+
+		*)
+			echo "Uknown system $SYSTEM_INFO"
+		;;
+	esac
+}
+
 # python command
 alias py='python3'
 
