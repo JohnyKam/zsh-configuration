@@ -128,8 +128,12 @@ system-upgrade(){
 			sudo apt-get update && sudo apt-get upgrade -y
 		;;
 
+		"Darwin")
+			brew update && brew upgrade
+		;;
+
 		*)
-			echo "Uknown system $SYSTEM_INFO"
+			echo "Uknown operating system: $SYSTEM_INFO"
 		;;
 	esac
 }
