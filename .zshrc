@@ -191,11 +191,11 @@ git_jira_commit(){
 		case $JIRA_TYPE in
 			"feature" | "bugfix" | "hotfix" | "release")
 				JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
-				echo "git commit -m \"${JIRA_BRANCH} $@\""
+				git commit -m "${JIRA_BRANCH} $@"
 			;;
 			
 			*)
-				echo "git commit -m \"$@\""
+				git commit -m "$@"
 			;;
 		esac
 	fi            
