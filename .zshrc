@@ -174,30 +174,31 @@ git_jira_commit(){
 	BRANCH_NAME=${BRANCH_NAME/ć/c}
 	BRANCH_NAME=${BRANCH_NAME/ć/c}
 
-	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev`
-	REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
-	JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
+	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev` 
 
-	REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
-	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
-	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
-	JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
+	if [[ ! $REV_BRANCH_NAME ]]; then
+		echo "Error!"
+	else
+		REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
+		JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
 
-	case $JIRA_TYPE in
-    	#cases
-	    "feature" | "bugfix" | "hotfix" | "release")
-		JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
-	        # git commit with JIRA_BRANCH
-	        git commit -m "${JIRA_BRANCH} $@"
-    	    ;;
+		REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
+		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
+		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
+		JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
 
-	#default
-	    *)
-        	JIRA_TYPE=
-	        BRANCH_NAME=
-	        git commit -m "$@"
-	    ;;
-	esac              
+
+		case $JIRA_TYPE in
+			"feature" | "bugfix" | "hotfix" | "release")
+				JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
+				echo "git commit -m \"${JIRA_BRANCH} $@\""
+			;;
+			
+			*)
+				echo "git commit -m \"$@\""
+			;;
+		esac
+	fi            
 }
 
 git_jira_commit_test(){
@@ -217,25 +218,31 @@ git_jira_commit_test(){
 	BRANCH_NAME=${BRANCH_NAME/ć/c}
 	BRANCH_NAME=${BRANCH_NAME/ć/c}
 
-	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev`
-	REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
-	JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
+	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev` 
 
-	REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
-	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
-	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
-	JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
+	if [[ ! $REV_BRANCH_NAME ]]; then
+		echo "Error!"
+	else
+		REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
+		JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
 
-	case $JIRA_TYPE in
-		"feature" | "bugfix" | "hotfix" | "release")
-			JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
-			echo "git commit -m \"${JIRA_BRANCH} $@\""
-		;;
-		
-		*)
-			echo "git commit -m \"$@\""
-		;;
-	esac
+		REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
+		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
+		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
+		JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
+
+
+		case $JIRA_TYPE in
+			"feature" | "bugfix" | "hotfix" | "release")
+				JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
+				echo "git commit -m \"${JIRA_BRANCH} $@\""
+			;;
+			
+			*)
+				echo "git commit -m \"$@\""
+			;;
+		esac
+	fi
 }
 
 git_tag_delete_local_and_remote(){
