@@ -44,7 +44,7 @@ test1:
     - cd $REPO_DIR
     - echo  | ./install.sh
     - echo "$SHELL"
-    # - PATH=$PATH":/usr/games"
+    - PATH=$PATH":/usr/games"
     - /bin/zsh ~/.zshrc
 
 # test2:
