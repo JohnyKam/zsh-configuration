@@ -157,6 +157,29 @@ alias consrr="conan_search_remote"
 alias consr="conan_search"
 alias conclear="conan_clear_local_cache"
 
+git_branch_name(){
+	NAME=${1}
+	NAME=${NAME/Ą/A}
+	NAME=${NAME/Ć/C}
+	NAME=${NAME/Ę/E}
+	NAME=${NAME/Ł/L}
+	NAME=${NAME/Ń/N}
+	NAME=${NAME/Ó/O}
+	NAME=${NAME/Ś/S}
+	NAME=${NAME//+([ŻŹ])/Z}
+
+	NAME=${NAME/ą/a}
+	NAME=${NAME/ć/c}
+	NAME=${NAME/ę/e}
+	NAME=${NAME/ł/l}
+	NAME=${NAME/ń/n}
+	NAME=${NAME/ó/o}
+	NAME=${NAME/ś/s}
+	NAME=${NAME//+([żź])/z}
+
+	echo ${NAME}
+}
+
 # git aliases
 git_jira_commit(){
         GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -164,15 +187,7 @@ git_jira_commit(){
 
 	BRANCH_NAME=${GIT_BRANCH##*/}
 
-	BRANCH_NAME=${BRANCH_NAME/ł/l}
-	BRANCH_NAME=${BRANCH_NAME/ó/o}
-	BRANCH_NAME=${BRANCH_NAME/ń/n}
-	BRANCH_NAME=${BRANCH_NAME/ą/a}
-	BRANCH_NAME=${BRANCH_NAME/ś/s}
-	BRANCH_NAME=${BRANCH_NAME//+([żź])/z}
-	BRANCH_NAME=${BRANCH_NAME/ę/e}
-	BRANCH_NAME=${BRANCH_NAME/ć/c}
-	BRANCH_NAME=${BRANCH_NAME/ć/c}
+	BRANCH_NAME=`git_branch_name $BRANCH_NAME`
 
 	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev` 
 
@@ -208,15 +223,7 @@ git_jira_commit_test(){
 
 	BRANCH_NAME=${GIT_BRANCH##*/}
 
-	BRANCH_NAME=${BRANCH_NAME/ł/l}
-	BRANCH_NAME=${BRANCH_NAME/ó/o}
-	BRANCH_NAME=${BRANCH_NAME/ń/n}
-	BRANCH_NAME=${BRANCH_NAME/ą/a}
-	BRANCH_NAME=${BRANCH_NAME/ś/s}
-	BRANCH_NAME=${BRANCH_NAME//+([żź])/z}
-	BRANCH_NAME=${BRANCH_NAME/ę/e}
-	BRANCH_NAME=${BRANCH_NAME/ć/c}
-	BRANCH_NAME=${BRANCH_NAME/ć/c}
+	BRANCH_NAME=`git_branch_name $BRANCH_NAME`
 
 	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev` 
 
