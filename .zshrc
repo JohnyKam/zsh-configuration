@@ -269,9 +269,8 @@ git_tag_unittest_add_local_and_remote(){
 	ERROR=
 	UT_TAGS=`gtv | grep "UnitTests"`
 	UT_TAG=`echo $UT_TAGS | cut -d "-" -f2`
-	UT_TAG=`echo ${UT_TAG[@]: -4}`
+	UT_TAG=`echo "${UT_TAG##*$'\n'}"`
 	UT_TAG=$(($UT_TAG+1))
-	# echo $UT_TAG
 	if [ $UT_TAG -lt 10 ]; then
 		UT_TAG="000"$UT_TAG
 	elif [ $UT_TAG -lt 100 ]; then
