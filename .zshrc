@@ -182,7 +182,8 @@ git_branch_name(){
 
 # git aliases
 git_jira_commit(){
-        GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+	GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
 	JIRA_TYPE=${GIT_BRANCH%/*}
 
 	BRANCH_NAME=${GIT_BRANCH##*/}
@@ -261,11 +262,43 @@ git_tag_add_local_and_remote(){
 }
 
 git_tag_unittest_add_local_and_remote(){
-	git tag "UnitTests-$@" && git push origin "UnitTests-$@"
+	ERROR=
+	UT_TAGS=`gtv | grep "UnitTests"`
+	UT_TAG=`echo $UT_TAGS | cut -d "-" -f2`
+	UT_TAG=`echo ${UT_TAG[@]: -4}`
+	UT_TAG=$(($UT_TAG+1))
+	# echo $UT_TAG
+	if [ $UT_TAG -lt 10 ]; then
+		UT_TAG="000"$UT_TAG
+	elif [ $UT_TAG -lt 100 ]; then
+		UT_TAG="00"$UT_TAG
+	elif [ $UT_TAG -lt 1000 ]; then
+		UT_TAG="0"$UT_TAG
+	elif [ $UT_TAG -lt 9999 ]; then
+		UT_TAG=$UT_TAG
+	else
+		echo "Error!: $UT_TAG"
+		ERROR=1
+	fi
+
+	if [[ -z $ERROR ]] && git tag "UnitTests-$UT_TAG" && git push origin "UnitTests-$UT_TAG"
 }
 
 git_tag_package_add_local_and_remote(){
 	git tag "Package-$@" && git push origin "Package-$@"
+}
+
+git_tag_conan_package_add_local_and_remote(){
+	git tag "CreatePackage-$@" && git push origin "CreatePackage-$@"
+}
+
+git_tag_conan_package_add_local_and_remote(){
+	PKG_VER=$(conan inspect -a=version . | cut -d " " -f2)
+	git_tag_conan_package_add_local_and_remote $PKG_VER
+}
+
+git_push_local_branch_to_remote(){
+	git push --set-upstream origin "$@"
 }
 
 #unset alias from git plugin
@@ -275,6 +308,8 @@ alias gcmsgt="git_jira_commit_test"
 alias gtrm="git_tag_delete_local_and_remote"
 alias gtaut="git_tag_unittest_add_local_and_remote"
 alias gtapkg="git_tag_package_add_local_and_remote"
+alias gtacpkg="git_tag_conan_package_add_local_and_remote"
+alias gpb="git_push_local_branch_to_remote"
 
 # Set starting dir
 # cd ~/
