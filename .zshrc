@@ -116,8 +116,12 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias alrel=". ~/.zshrc && echo 'zsh aliases from ~/.zshrc reloaded.'"
 
-alias ll="ls -lah"
-alias lg="ls -lah | grep"
+export LS_OPTIONS='--color=auto'
+eval "$(dircolors)"
+unalias l
+alias l="ls -lah $LS_OPTIONS"
+alias ll="l"
+alias lg="ls -lah $LS_OPTIONS | grep"
 
 system-upgrade(){
 	SYSTEM_INFO=$(uname -o)
