@@ -314,6 +314,8 @@ alias gtapkg="git_tag_package_add_local_and_remote"
 alias gtacpkg="git_tag_conan_package_add_local_and_remote"
 alias gpb="git_push_local_branch_to_remote"
 
+alias gcgchs="git config --global credential.helper store"
+
 # Set starting dir
 # cd ~/
 
