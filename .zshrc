@@ -296,7 +296,7 @@ git_tag_conan_package_add_local_and_remote(){
 }
 
 git_tag_conan_package_add_local_and_remote(){
-	PKG_VER=$(conan inspect -a=version . | cut -d " " -f2)
+	PKG_VER=$(conan inspect --raw name .)
 	git_tag_conan_package_add_local_and_remote $PKG_VER
 }
 
@@ -328,6 +328,13 @@ export PROMPT_COMMAND='history -a'
 export HISTSIZE=999999999999
 export HISTFILESIZE=$HISTSIZE
 
+# Colors
+COLOR_RED='\033[0;31m'
+COLOR_GREEN='\033[0;32m'
+BOLD_COLOR_RED='\033[1;31m' 
+BOLD_COLOR_GREEN='\033[1;32m'
+COLOR_RESET='\033[0m'
+
 #Docker vs code extension reset
 vs_code_ext_reset() {
 	VS_CODE_CPPTOOLS_PATH="/root/.vscode-server/extensions/ms-vscode.cpptools-1.14.5-linux-x64/bin/"
@@ -343,3 +350,4 @@ cowsay_msg(){
 }
 
 cowsay_msg
+
