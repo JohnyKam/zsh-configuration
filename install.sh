@@ -19,6 +19,10 @@ function install_oh_my_zsh(){
     ) | sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
+function install_zsh_autosuggestions(){
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+}
+
 #Script begin
 
 print_separator
@@ -36,6 +40,15 @@ then
         echo "Powerlevel10k installed."
         echo "All jobs done. Jolly good!"
         echo "restart terminal/ssh connection"
+    fi
+    if [ -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ];
+    then
+        echo "zsh-autosuggestions plugin installed"
+    else
+        print_separator
+        echo "installing zsh-autosuggestions plugin"
+        install_zsh_autosuggestions
+        echo "zsh-autosuggestion plugin installed."
     fi
 else
     echo "oh-my-zsh is missingi!"
