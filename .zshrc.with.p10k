@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.local/bin:/usr/games:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -85,7 +85,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git history jfrog pip docker)
+plugins=(git history jfrog pip docker zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -127,6 +127,23 @@ alias alrel=". ~/.zshrc && echo 'zsh aliases from ~/.zshrc reloaded.'"
 alias ll="ls -lah"
 alias lg="ls -lah | grep"
 
+system-upgrade(){
+	SYSTEM_INFO=$(uname -o)
+	case $SYSTEM_INFO in
+			"Darwin")
+					brew update && brew upgrade
+			;;
+
+			"GNU/Linux")
+					sudo apt-get update && sudo apt-get upgrade
+			;;
+
+			*)
+					echo "Uknown operating system"
+			;;
+	esac
+}
+
 # python command
 alias py='python3'
 
@@ -146,37 +163,64 @@ alias consrr="conan_search_remote"
 alias consr="conan_search"
 alias conclear="conan_clear_local_cache"
 
+git_branch_name(){
+	NAME=${1}
+	NAME=${NAME/Ą/A}
+	NAME=${NAME/Ć/C}
+	NAME=${NAME/Ę/E}
+	NAME=${NAME/Ł/L}
+	NAME=${NAME/Ń/N}
+	NAME=${NAME/Ó/O}
+	NAME=${NAME/Ś/S}
+	NAME=${NAME//+([ŻŹ])/Z}
+
+	NAME=${NAME/ą/a}
+	NAME=${NAME/ć/c}
+	NAME=${NAME/ę/e}
+	NAME=${NAME/ł/l}
+	NAME=${NAME/ń/n}
+	NAME=${NAME/ó/o}
+	NAME=${NAME/ś/s}
+	NAME=${NAME//+([żź])/z}
+
+	echo ${NAME}
+}
+
 # git aliases
 git_jira_commit(){
-        GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+	GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
 	JIRA_TYPE=${GIT_BRANCH%/*}
 
 	BRANCH_NAME=${GIT_BRANCH##*/}
 
-	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev`
-	REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
-	JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
+	BRANCH_NAME=`git_branch_name $BRANCH_NAME`
 
-	REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
-	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
-	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
-	JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
+	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev` 
 
-	case $JIRA_TYPE in
-    	#cases
-	    "feature" | "bugfix" | "hotfix" | "release")
-		JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
-	        # git commit with JIRA_BRANCH
-	        git commit -m "${JIRA_BRANCH} $@"
-    	    ;;
+	if [[ ! $REV_BRANCH_NAME ]]; then
+		echo "Error!"
+	else
+		REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
+		JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
 
-	#default
-	    *)
-        	JIRA_TYPE=
-	        BRANCH_NAME=
-	        git commit -m "$@"
-	    ;;
-	esac              
+		REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
+		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
+		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
+		JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
+
+
+		case $JIRA_TYPE in
+			"feature" | "bugfix" | "hotfix" | "release")
+				JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
+				git commit -m "${JIRA_BRANCH} $@"
+			;;
+			
+			*)
+				git commit -m "$@"
+			;;
+		esac
+	fi            
 }
 
 git_jira_commit_test(){
@@ -186,25 +230,33 @@ git_jira_commit_test(){
 
 	BRANCH_NAME=${GIT_BRANCH##*/}
 
-	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev`
-	REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
-	JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
+	BRANCH_NAME=`git_branch_name $BRANCH_NAME`
 
-	REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
-	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
-	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
-	JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
+	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev` 
 
-	case $JIRA_TYPE in
-		"feature" | "bugfix" | "hotfix" | "release")
-			JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
-			echo "git commit -m \"${JIRA_BRANCH} $@\""
-		;;
-		
-		*)
-			echo "git commit -m \"$@\""
-		;;
-	esac
+	if [[ ! $REV_BRANCH_NAME ]]; then
+		echo "Error!"
+	else
+		REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
+		JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
+
+		REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
+		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
+		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
+		JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
+
+
+		case $JIRA_TYPE in
+			"feature" | "bugfix" | "hotfix" | "release")
+				JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
+				echo "git commit -m \"${JIRA_BRANCH} $@\""
+			;;
+			
+			*)
+				echo "git commit -m \"$@\""
+			;;
+		esac
+	fi
 }
 
 git_tag_delete_local_and_remote(){
@@ -216,11 +268,42 @@ git_tag_add_local_and_remote(){
 }
 
 git_tag_unittest_add_local_and_remote(){
-	git tag "UnitTests-$@" && git push origin "UnitTests-$@"
+	ERROR=
+	UT_TAGS=`gtv | grep "UnitTests"`
+	UT_TAG=`echo $UT_TAGS | cut -d "-" -f2`
+	UT_TAG=`echo "${UT_TAG##*$'\n'}"`
+	UT_TAG=$(($UT_TAG+1))
+	if [ $UT_TAG -lt 10 ]; then
+		UT_TAG="000"$UT_TAG
+	elif [ $UT_TAG -lt 100 ]; then
+		UT_TAG="00"$UT_TAG
+	elif [ $UT_TAG -lt 1000 ]; then
+		UT_TAG="0"$UT_TAG
+	elif [ $UT_TAG -lt 9999 ]; then
+		UT_TAG=$UT_TAG
+	else
+		echo "Error!: $UT_TAG"
+		ERROR=1
+	fi
+
+	if [[ -z $ERROR ]] && git tag "UnitTests-$UT_TAG" && git push origin "UnitTests-$UT_TAG"
 }
 
 git_tag_package_add_local_and_remote(){
 	git tag "Package-$@" && git push origin "Package-$@"
+}
+
+git_tag_conan_package_add_local_and_remote(){
+	git tag "CreatePackage-$@" && git push origin "CreatePackage-$@"
+}
+
+git_tag_conan_package_add_local_and_remote(){
+	PKG_VER=$(conan inspect --raw name .)
+	git_tag_conan_package_add_local_and_remote $PKG_VER
+}
+
+git_push_local_branch_to_remote(){
+	git push --set-upstream origin "$@"
 }
 
 #unset alias from git plugin
@@ -230,6 +313,10 @@ alias gcmsgt="git_jira_commit_test"
 alias gtrm="git_tag_delete_local_and_remote"
 alias gtaut="git_tag_unittest_add_local_and_remote"
 alias gtapkg="git_tag_package_add_local_and_remote"
+alias gtacpkg="git_tag_conan_package_add_local_and_remote"
+alias gpb="git_push_local_branch_to_remote"
+
+alias gcgchs="git config --global credential.helper store"
 
 # Set starting dir
 # cd ~/
@@ -245,9 +332,26 @@ export PROMPT_COMMAND='history -a'
 export HISTSIZE=999999999999
 export HISTFILESIZE=$HISTSIZE
 
+# Colors
+# usage: echo -e "$COLOR_REDThis is red$COLORRESET"
+COLOR_RED='\033[0;31m'
+COLOR_GREEN='\033[0;32m'
+BOLD_COLOR_RED='\033[1;31m' 
+BOLD_COLOR_GREEN='\033[1;32m'
+COLOR_RESET='\033[0m'
+
+#Docker vs code extension reset
+vs_code_ext_reset() {
+	VS_CODE_CPPTOOLS_PATH="/root/.vscode-server/extensions/ms-vscode.cpptools-1.14.5-linux-x64/bin/"
+	chmod u+x $VS_CODE_CPPTOOLS_PATH"cpptools"
+	chmod u+x $VS_CODE_CPPTOOLS_PATH"cpptools-srv"
+	chmod u+x $VS_CODE_CPPTOOLS_PATH"cpptools-wordexp"
+}
+[[ -d "$VS_CODE_CPPTOOLS_PATH" ]] && vs_code_ext_reset
+
 # required cowsay and fortune apps :-)
 cowsay_msg(){
-	fortune | cowsay -f dragon 2>/dev/null
+	which cowsay 1>/dev/null 2>&1 && which fortune 1>/dev/null 2>&1 && fortune | cowsay -f dragon 2>/dev/null
 }
 
 cowsay_msg

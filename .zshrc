@@ -77,7 +77,7 @@ ZSH_THEME="gnzh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git history jfrog pip docker)
+plugins=(git history jfrog pip docker zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -125,20 +125,18 @@ alias lg="ls -lah $LS_OPTIONS | grep"
 
 system-upgrade(){
 	SYSTEM_INFO=$(uname -o)
-
 	case $SYSTEM_INFO in
-		"GNU/Linux")
-			# debian/ubuntu/respbian update
-			sudo apt-get update && sudo apt-get upgrade -y
-		;;
+			"Darwin")
+					brew update && brew upgrade
+			;;
 
-		"Darwin")
-			brew update && brew upgrade
-		;;
+			"GNU/Linux")
+					sudo apt-get update && sudo apt-get upgrade
+			;;
 
-		*)
-			echo "Uknown operating system: $SYSTEM_INFO"
-		;;
+			*)
+					echo "Uknown operating system"
+			;;
 	esac
 }
 
@@ -331,6 +329,7 @@ export HISTSIZE=999999999999
 export HISTFILESIZE=$HISTSIZE
 
 # Colors
+# usage: echo -e "$COLOR_REDThis is red$COLORRESET"
 COLOR_RED='\033[0;31m'
 COLOR_GREEN='\033[0;32m'
 BOLD_COLOR_RED='\033[1;31m' 
