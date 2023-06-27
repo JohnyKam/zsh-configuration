@@ -329,7 +329,7 @@ export HISTSIZE=999999999999
 export HISTFILESIZE=$HISTSIZE
 
 # Colors
-# usage: echo -e "$COLOR_REDThis is red$COLORRESET"
+# usage: echo -e "${COLOR_RED}This is red.${COLORRESET} ${BOLD_COLOR_GREEN}And this is bold green${COLOR_RESET}"
 COLOR_RED='\033[0;31m'
 COLOR_GREEN='\033[0;32m'
 BOLD_COLOR_RED='\033[1;31m' 
