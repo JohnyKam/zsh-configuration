@@ -56,6 +56,10 @@ else
     install_oh_my_zsh
     echo "oh-my-zsh installed."
     print_separator
+    echo "installing zsh-autosuggestions..."
+    install_zsh_autosuggestions
+    echo "zsh-autosuggestions installed."
+    print_separator
     echo "installing Powerlevel10k..."
     install_powerlevel10k
     echo "Powerlevel10k installed."
