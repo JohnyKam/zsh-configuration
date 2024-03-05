@@ -302,6 +302,15 @@ git_push_local_branch_to_remote(){
 	git push --set-upstream origin "$@"
 }
 
+git_tag_python_package_add_local_and_remote(){
+	if [[ -f "setup.py" ]]; then
+		PKG_VER=$(python3 setup.py --version)
+		echo $PKG_VER
+	else
+		echo "Not in a python package directory!!"
+	fi
+}
+
 #unset alias from git plugin
 unalias gcmsg
 alias gcmsg="git_jira_commit"
@@ -310,6 +319,7 @@ alias gtrm="git_tag_delete_local_and_remote"
 alias gtaut="git_tag_unittest_add_local_and_remote"
 alias gtapkg="git_tag_package_add_local_and_remote"
 alias gtacpkg="git_tag_conan_package_add_local_and_remote"
+alias gtapypkg="git_tag_python_package_add_local_and_remote"
 alias gpb="git_push_local_branch_to_remote"
 
 alias gcgchs="git config --global credential.helper store"
