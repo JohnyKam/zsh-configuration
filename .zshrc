@@ -209,11 +209,11 @@ git_jira_commit(){
 		case $JIRA_TYPE in
 			"feature" | "bugfix" | "hotfix" | "release")
 				JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
-				git commit -m "${JIRA_BRANCH} $@"
+				git commit -m "${JIRA_BRANCH} $@" -e
 			;;
 			
 			*)
-				git commit -m "$@"
+				git commit -m "$@" -e
 			;;
 		esac
 	fi            
@@ -245,11 +245,11 @@ git_jira_commit_test(){
 		case $JIRA_TYPE in
 			"feature" | "bugfix" | "hotfix" | "release")
 				JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
-				echo "git commit -m \"${JIRA_BRANCH} $@\""
+				echo "git commit -m \"${JIRA_BRANCH} $@\" -e"
 			;;
 			
 			*)
-				echo "git commit -m \"$@\""
+				echo "git commit -m \"$@\" -e"
 			;;
 		esac
 	fi
