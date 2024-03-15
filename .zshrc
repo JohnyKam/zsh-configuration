@@ -331,11 +331,11 @@ export HISTFILESIZE=$HISTSIZE
 
 # Colors
 # usage: echo -e "${COLOR_RED}This is red.${COLORRESET} ${BOLD_COLOR_GREEN}And this is bold green${COLOR_RESET}"
-COLOR_RED='\033[0;31m'
-COLOR_GREEN='\033[0;32m'
-BOLD_COLOR_RED='\033[1;31m' 
-BOLD_COLOR_GREEN='\033[1;32m'
-COLOR_RESET='\033[0m'
+export COLOR_RED='\033[0;31m'
+export COLOR_GREEN='\033[0;32m'
+export BOLD_COLOR_RED='\033[1;31m'
+export BOLD_COLOR_GREEN='\033[1;32m'
+export COLOR_RESET='\033[0m'
 
 #Docker vs code extension reset
 vs_code_ext_reset() {
