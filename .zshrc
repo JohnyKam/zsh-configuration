@@ -206,15 +206,14 @@ git_jira_commit(){
 		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
 		JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
 
-
 		case $JIRA_TYPE in
 			"feature" | "bugfix" | "hotfix" | "release")
 				JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
-				git commit -m "${JIRA_BRANCH} $@" -e
+				git commit -p -e -m "${JIRA_BRANCH} $@"
 			;;
 			
 			*)
-				git commit -m "$@" -e
+				git commit -p -e
 			;;
 		esac
 	fi            
