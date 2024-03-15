@@ -324,15 +324,6 @@ alias gpb="git_push_local_branch_to_remote"
 
 alias gcgchs="git config --global credential.helper store"
 
-# Set starting dir
-# cd ~/
-
-# Add ssh keys for ssh 
-#ssh-add ~/.ssh/malina 1> /dev/null 2>&1
-#ssh-add ~/.ssh/shifter 1> /dev/null 2>&1
-#ssh-add ~/.ssh/viofor_vpb2504 1> /dev/null 2>&1
-#ssh-add ~/.ssh/viofor_vpb2503 1> /dev/null 2>&1
-
 # bash history settings
 export PROMPT_COMMAND='history -a'
 export HISTSIZE=999999999999
@@ -362,3 +353,4 @@ cowsay_msg(){
 
 cowsay_msg
 
+[[ -f "$HOME/.zshrc_local_settings" ]] && source "$HOME/.zshrc_local_settings" || echo "No .zshrc_local_settings found"
