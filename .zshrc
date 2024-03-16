@@ -305,7 +305,7 @@ git_push_local_branch_to_remote(){
 git_tag_python_package_add_local_and_remote(){
 	if [[ -f "setup.py" ]]; then
 		PKG_VER=$(python3 setup.py --version)
-		echo $PKG_VER
+		git tag "Package-$PKG_VER" && git push origin "Package-$PKG_VER"
 	else
 		echo "Not in a python package directory!!"
 	fi
