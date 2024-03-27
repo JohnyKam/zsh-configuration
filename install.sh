@@ -80,6 +80,11 @@ else
     # echo "Copy .zshrc"
     cp .zshrc ~/ && echo ".zshrc copied from git repo to home dir"
     echo "Set ZSH_THEME=\"powerlevel10k/powerlevel10k\" in ~/.zshrc."
+    if [ ! -f ~/.zshrc_local_settings ];
+    then
+        echo "Create ~/.zshrc_local_settings file and add custom settings."
+        cp .zshrc_local_settings ~/.zshrc_local_settings
+    fi
 fi
 
 print_separator

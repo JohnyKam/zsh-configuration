@@ -193,30 +193,41 @@ git_jira_commit(){
 
 	BRANCH_NAME=`git_branch_name $BRANCH_NAME`
 
-	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev` 
+	REV_BRANCH_NAME=`echo $BRANCH_NAME | rev`
+	REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
+	JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
 
-	if [[ ! $REV_BRANCH_NAME ]]; then
-		echo "Error!"
-	else
-		REV_BRANCH_NAME=${REV_BRANCH_NAME##*-}
-		JIRA_PROJECT_TAG=`echo $REV_BRANCH_NAME | rev`
+	REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
+	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
+	REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
+	JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
 
-		REV_JIRA_PROJECT_TAG_NO=`echo $BRANCH_NAME | rev`
-		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO%-*}
-		REV_JIRA_PROJECT_TAG_NO=${REV_JIRA_PROJECT_TAG_NO##*-}
-		JIRA_PROJECT_TAG_NO=`echo $REV_JIRA_PROJECT_TAG_NO | rev`
+	case $JIRA_TYPE in
+    	#cases
+	    "feature" | "bugfix" | "hotfix" | "release")
+		JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
+	        # git commit with JIRA_BRANCH
 
-		case $JIRA_TYPE in
-			"feature" | "bugfix" | "hotfix" | "release")
-				JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
+			if [[ -z $@ ]]; 
+			then
 				git commit -p -e -m "${JIRA_BRANCH} $@"
-			;;
-			
-			*)
+			else
+	        	git commit -p -e -m "${JIRA_BRANCH}"
+			fi
+    	    ;;
+
+	#default
+	    *)
+        	JIRA_TYPE=
+	        BRANCH_NAME=
+			if [[ -z $@ ]];
+			then
 				git commit -p -e
-			;;
-		esac
-	fi            
+			else 
+	        	git commit -p -e -m "$@"
+			fi
+	    ;;
+	esac              
 }
 
 git_jira_commit_test(){
@@ -245,11 +256,11 @@ git_jira_commit_test(){
 		case $JIRA_TYPE in
 			"feature" | "bugfix" | "hotfix" | "release")
 				JIRA_BRANCH="$JIRA_PROJECT_TAG-$JIRA_PROJECT_TAG_NO"
-				echo "git commit -m \"${JIRA_BRANCH} $@\" -e"
+				echo "git commit -m -e -p \"${JIRA_BRANCH} $@\" "
 			;;
 			
 			*)
-				echo "git commit -m \"$@\" -e"
+				echo "git commit -m -e -p \"$@\""
 			;;
 		esac
 	fi
@@ -364,6 +375,10 @@ cowsay_msg(){
 	which cowsay 1>/dev/null 2>&1 && which fortune 1>/dev/null 2>&1 && fortune | cowsay -f dragon 2>/dev/null
 }
 
+gh --version 1>/dev/null 2>&1 && gh copilot 1>/dev/null 2>&1 && alias ghcs="gh copilot suggest $@" || echo "copilot missing"
+
 cowsay_msg
 
 [[ -f "$HOME/.zshrc_local_settings" ]] && source "$HOME/.zshrc_local_settings" || echo "No .zshrc_local_settings found"
+
+# End of file
