@@ -3,6 +3,4 @@
 
 # Add ssh keys for ssh 
 eval $(ssh-agent) 1>/dev/null 2>&1
-ssh-add ~/.ssh/malina 1> /dev/null 2>&1
-ssh-add ~/.ssh/shifter 1> /dev/null 2>&1
-ssh-add ~/.ssh/kraken 1> /dev/null 2>&1
+#ssh-add ~/.ssh/your_secret_key 1> /dev/null 2>&1
